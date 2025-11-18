@@ -1,5 +1,5 @@
 body {
-    background-color: red; 
+    background-color: rgb(0, 0, 0); 
     color: #fff;       
     
     margin: 0;
@@ -14,7 +14,7 @@ body {
 
 .main-header {
     
-    background-color: #fefbfb; 
+    background-color: #3a3939; 
     
     color: #fff;
     display: flex;
