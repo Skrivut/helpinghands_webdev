@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2005" height="350" viewBox="0 0 2005 350" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#e6e6e6"/>
+      <stop offset="100%" stop-color="#cfcfcf"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="2005" height="350" rx="12" ry="12" fill="url(#g)" stroke="#8b6f4a" stroke-width="6"/>
+  <!-- inner darker slot area -->
+  <rect x="80" y="90" width="1845" height="170" rx="8" ry="8" fill="#4b3829" opacity="0.85"/>
+  <!-- subtle highlight -->
+  <rect x="80" y="90" width="1845" height="24" rx="8" ry="8" fill="#ffffff" opacity="0.06"/>
+</svg>
