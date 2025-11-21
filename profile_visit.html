@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile</title>
+  <link rel="stylesheet" href="profile_visit.css">
+</head>
+<body>
+  
+  <div class="overlay">
+    <main class="container" role="main" aria-labelledby="profile-title">
+      <section class="left">
+        <div style="display:flex; align-items:flex-start; gap:18px">
+          <div class="profile-head" style="flex:1">
+            <div class="avatar" id="avatar">
+              <img id="avatarImg" src="ambot sa imo.png" alt="profile picture">
+            </div>
+
+            <div class="profile-info">
+              <h1 id="profile-title">Earl</h1>
+              <p>Online </p>
+              <div class="bio">Bio: <span>Dale bahog o10 xD</span></div>
+            </div>
+
+            <div class="action-row">
+              <button class="btn" id="customize">Customize Profile</button>
+              <button class="btn secondary" id="settings">Settings</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">About me</div>
+          <div class="meta-grid">
+            <div>
+              <div class="label">Location</div>
+              <div class="meta-item">Quiot San Roque Homes, Cebu City!</div>
+            </div>
+            <div>
+              <div class="label">Member since</div>
+              <div class="meta-item">Month / Year</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Recently Viewed</div>
+          <div class="thumb-grid">
+            <div class="thumb"><img src=""></div>
+            <div class="thumb"><img src=""></div>
+            <div class="thumb"><img src=""></div>
+            <div class="thumb"><img src=""></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">My Items for Trade</div>
+          <div class="items-list">
+            <div class="item">
+              <div class="cover"><img src=""></div>
+              <div class="meta">
+                <h4>Adidas T shirt</h4>
+                <p>Condition: Rarely used • Qty: 1</p>
+              </div>
+              <div class="actions">
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="cover"><img src=""></div>
+              <div class="meta">
+                <h4>Lee Hoodie</h4>
+                <p>Condition: Good as new • Qty: 2</p>
+              </div>
+              <div class="actions">
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="cover"><img src=""></div>
+              <div class="meta">
+                <h4>Realme 7</h4> 
+                <p>Condition: Good as new • Qty: 1</p>
+              </div>
+              <div class="actions">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="right">
+        <div class="card">
+          <div class="section-title">Profile Summary</div>
+          <div class="summary-grid">
+            <div>
+              <div class="summary-name">Earl</div>
+              <div class="summary-status">Male</div>
+            </div>
+            <div class="summary-items">
+              <div class="total">Items Listed</div>
+              <div class="label">12</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Quick Actions</div>
+          <button class="btn">Create New Trade</button>
+          <button class="btn secondary">Manage Listings</button>
+          <button class="btn" id="uploadBg">Change Background</button>
+        </div>
+
+        <div class="card">
+          <div class="section-title">Help</div>
+          <p class="help">Need help? Contact Clint Mark S. Aquino </p>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById('customize').onclick = () => alert('Customize Profile -------------)');
+    document.getElementById('settings').onclick = () => alert('Settings >>>>>');
+    document.querySelector('.avatar .edit').onclick = () => alert('Change avatar — ');
+    document.getElementById('uploadBg').onclick = () => alert('Change background — ');
+  </script>
+</body>
+</html>
