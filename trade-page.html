@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Trade Items - Helping Hands</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./trade-page.css" />
+  </head>
+
+  <body>
+    <nav class="main-nav">
+      <h4 class="site-title">Helping Hands</h4>
+      <div class="nav-links">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./dashboard.html" class="nav-link">Dashboard</a>
+        <a href="./trade.html" class="nav-link">Trade</a>
+      </div>
+      <div class="icon-buttons-group">
+        <button
+          id="theme-toggle"
+          class="btn icon-btn"
+          aria-label="Toggle Dark Mode"
+        >
+          <i class="uil uil-moon"></i>
+        </button>
+
+        <a
+          href="./login_signup.html"
+          class="btn icon-btn"
+          aria-label="Login / Sign Up"
+        >
+          <i class="uil uil-user"></i>
+        </a>
+      </div>
+    </nav>
+
+    <div class="main-content-area">
+      <section class="trade-section">
+        <div class="trade-container">
+          <!-- Back Button -->
+          <a href="./page.html?id=" id="backLink" class="back-button">
+            <i class="uil uil-arrow-left"></i> Back to Item
+          </a>
+
+          <div class="trade-wrapper">
+            <!-- Left Side: Item Being Traded -->
+            <div class="trade-item-section">
+              <h2 class="section-title">You're Interested In</h2>
+              <div class="trade-card item-card-display">
+                <img id="tradingItemImage" src="" alt="Item" class="trade-item-image" />
+                <div class="trade-card-content">
+                  <h3 id="tradingItemName" class="trade-item-name"></h3>
+                  <p id="tradingItemDescription" class="trade-item-desc"></p>
+                  <div class="trade-badges">
+                    <span id="tradingItemCondition" class="badge-condition"></span>
+                    <span id="tradingItemCategory" class="badge-category"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Center: Trade Action -->
+            <div class="trade-action-section">
+              <div class="trade-action-icon">
+                <i class="uil uil-exchange"></i>
+              </div>
+              <p class="trade-action-text">Propose a Trade</p>
+            </div>
+
+            <!-- Right Side: Your Items to Trade -->
+            <div class="your-items-section">
+              <h2 class="section-title">Select Your Items to Trade</h2>
+              <div id="yourItemsContainer" class="your-items-grid">
+                <!-- Your items will be populated here -->
+              </div>
+              <button class="btn btn-add-item" id="addItemBtn">
+                <i class="uil uil-plus"></i> Add More Items
+              </button>
+            </div>
+          </div>
+
+          <!-- Trade Summary -->
+          <div class="trade-summary-section">
+            <h2 class="section-title">Trade Summary</h2>
+            <div class="summary-card">
+              <div class="summary-left">
+                <h4>You're Trading:</h4>
+                <ul id="yourItemsList" class="items-list">
+                  <li>No items selected</li>
+                </ul>
+              </div>
+              <div class="summary-center">
+                <i class="uil uil-exchange-alt"></i>
+              </div>
+              <div class="summary-right">
+                <h4>For:</h4>
+                <ul class="items-list">
+                  <li id="tradeSummaryItem"></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Trade Details -->
+            <div class="trade-details-form">
+              <h3 class="form-title">Trade Message</h3>
+              <textarea
+                id="tradeMessage"
+                class="form-control trade-textarea"
+                placeholder="Add a message to the owner explaining why you're interested in trading..."
+                rows="4"
+              ></textarea>
+
+              <!-- Trade Agreement -->
+              <div class="trade-agreement">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="agreementCheckbox" />
+                  <span>I agree to the trade terms and conditions</span>
+                </label>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="trade-action-buttons">
+                <button class="btn btn-primary btn-lg" id="submitTradeBtn">
+                  <i class="uil uil-check-circle"></i> Submit Trade Proposal
+                </button>
+                <button class="btn btn-secondary btn-lg" id="cancelTradeBtn">
+                  <i class="uil uil-times"></i> Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="./script.js"></script>
+    <script src="./trade-page.js"></script>
+  </body>
+</html>

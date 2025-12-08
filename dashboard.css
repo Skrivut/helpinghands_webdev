@@ -1,0 +1,472 @@
+/* ===== DASHBOARD STYLES ===== */
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.dashboard-section {
+  padding: 80px 5%;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  transition: background 0.3s ease;
+}
+
+.dark-mode .dashboard-section {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.dashboard-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 10px;
+  animation: slideInDown 0.6s ease-out;
+}
+
+.dark-mode .dashboard-title {
+  color: #ecf0f1;
+}
+
+.dashboard-subtitle {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  text-align: center;
+  margin-bottom: 60px;
+  animation: slideInUp 0.6s ease-out 0.2s both;
+}
+
+.dark-mode .dashboard-subtitle {
+  color: #bdc3c7;
+}
+
+/* ===== GRID LAYOUT ===== */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .dashboard-title {
+    font-size: 2rem;
+  }
+
+  .dashboard-subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* ===== ITEM CARD ===== */
+
+.item-card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  animation: fadeInUp 0.6s ease-out both;
+  text-decoration: none;
+  color: inherit;
+}
+
+.item-card-link {
+  cursor: pointer;
+}
+
+.item-card:nth-child(1) { animation-delay: 0.1s; }
+.item-card:nth-child(2) { animation-delay: 0.2s; }
+.item-card:nth-child(3) { animation-delay: 0.3s; }
+.item-card:nth-child(4) { animation-delay: 0.4s; }
+.item-card:nth-child(5) { animation-delay: 0.5s; }
+.item-card:nth-child(6) { animation-delay: 0.6s; }
+
+.item-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  color: inherit;
+}
+
+.dark-mode .item-card {
+  background: #2e3047;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .item-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== IMAGE CONTAINER ===== */
+
+.item-image-container {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.item-card:hover .item-image {
+  transform: scale(1.1);
+}
+
+/* ===== CARD CONTENT ===== */
+
+.item-content {
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 12px;
+  text-transform: capitalize;
+}
+
+.dark-mode .item-name {
+  color: #ecf0f1;
+}
+
+.item-description {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 18px;
+  flex-grow: 1;
+}
+
+.dark-mode .item-description {
+  color: #bdc3c7;
+}
+
+/* ===== ITEM META ===== */
+
+.item-meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.item-condition,
+.item-category {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.item-condition {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.dark-mode .item-condition {
+  background-color: #1b5e20;
+  color: #81c784;
+}
+
+.item-category {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.dark-mode .item-category {
+  background-color: #0d47a1;
+  color: #64b5f6;
+}
+
+/* ===== ITEM OWNER (CARD FOOTER) ===== */
+
+.item-owner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.owner-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.owner-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #f0f0f0;
+}
+
+.owner-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.owner-link:hover .owner-name {
+  color: #764ba2;
+}
+
+.dark-mode .owner-avatar {
+  border-color: #3a3b4d;
+}
+
+.dark-mode .owner-name {
+  color: #9fb3ff;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== THEME TOGGLE BUTTON ===== */
+
+#theme-toggle {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  border: 2px solid #2c3e50;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+#theme-toggle:hover {
+  background-color: rgba(102, 126, 234, 0.1);
+  border-color: #667eea;
+  color: #667eea;
+  transform: rotate(20deg);
+}
+
+.dark-mode #theme-toggle {
+  color: #ecf0f1;
+  border-color: #ecf0f1;
+}
+
+.dark-mode #theme-toggle:hover {
+  background-color: rgba(102, 126, 234, 0.2);
+  border-color: #667eea;
+  color: #667eea;
+}
+
+/* ===== NAVIGATION LINKS ===== */
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  flex-grow: 1;
+  margin-left: 40px;
+}
+
+.nav-link {
+  color: #2c3e50;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #667eea;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #667eea;
+}
+
+.dark-mode .nav-link {
+  color: #ecf0f1;
+}
+
+.dark-mode .nav-link:hover,
+.dark-mode .nav-link.active {
+  color: #667eea;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+}
+
+/* ===== TRADE OFFERS PANEL ===== */
+
+.trade-offers-section {
+  padding: 60px 5%;
+  background: transparent;
+}
+
+.trade-offers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  max-width: 1200px;
+  margin: 30px auto 0 auto;
+}
+
+.trade-offer-card {
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.trade-offer-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.12);
+}
+
+.trade-offer-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  background: #f4f6fa;
+}
+
+.trade-offer-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trade-offer-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.trade-offer-desc {
+  font-size: 0.9rem;
+  color: #5b6b73;
+  flex-grow: 1;
+}
+
+.trade-offer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.trade-off-owner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trade-owner-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #f0f0f0;
+}
+
+.trade-owner-name {
+  font-weight: 700;
+  color: #667eea;
+}
+
+.trade-offer-link {
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.dark-mode .trade-offer-card {
+  background: #2e3047;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+.dark-mode .trade-offer-desc {
+  color: #c4c9d6;
+}
+
+.dark-mode .trade-owner-name {
+  color: #9fb3ff;
+}
+
+/* Hide textual owner names on dashboard cards to keep avatars only */
+.dashboard-grid .owner-name {
+  display: none;
+}
+
+/* Hide owner name in trade offers list (keep avatar and link) */
+.trade-offers-grid .trade-owner-name {
+  display: none;
+}

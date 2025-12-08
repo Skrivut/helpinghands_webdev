@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Item Details - Helping Hands</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./page.css" />
+  </head>
+
+  <body>
+    <nav class="main-nav">
+      <h4 class="site-title">Helping Hands</h4>
+      <div class="nav-links">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./dashboard.html" class="nav-link">Dashboard</a>
+        <a href="./trade.html" class="nav-link">Trade</a>
+      </div>
+      <div class="icon-buttons-group">
+        <button
+          id="theme-toggle"
+          class="btn icon-btn"
+          aria-label="Toggle Dark Mode"
+        >
+          <i class="uil uil-moon"></i>
+        </button>
+
+        <a
+          href="./login_signup.html"
+          class="btn icon-btn"
+          aria-label="Login / Sign Up"
+        >
+          <i class="uil uil-user"></i>
+        </a>
+      </div>
+    </nav>
+
+    <div class="main-content-area">
+      <section class="page-section">
+        <div class="page-container">
+          <!-- Back Button -->
+          <a href="./dashboard.html" class="back-button">
+            <i class="uil uil-arrow-left"></i> Back to Dashboard
+          </a>
+
+          <div class="item-detail-wrapper">
+            <!-- Item Image -->
+            <div class="item-detail-image">
+              <img id="itemImage" src="" alt="Item" class="detail-image" />
+            </div>
+
+            <!-- Item Details -->
+            <div class="item-detail-content">
+              <div class="detail-header">
+                <h1 id="itemTitle" class="detail-title"></h1>
+                <div class="item-owner-detail" id="ownerDetail">
+                  <a href="#" id="ownerLink" class="owner-link-detail" title="View owner profile">
+                    <img id="ownerAvatar" src="" alt="Owner" class="owner-avatar-detail" />
+                    <span id="ownerName" class="owner-name-detail"></span>
+                  </a>
+                </div>
+                <div class="detail-badges">
+                  <span id="itemCondition" class="badge-condition"></span>
+                  <span id="itemCategory" class="badge-category"></span>
+                </div>
+              </div>
+
+              <!-- Full Description -->
+              <div class="description-section">
+                <h2 class="section-title">Description</h2>
+                <p id="itemDescription" class="full-description"></p>
+              </div>
+
+              <!-- Item Details -->
+              <div class="details-grid">
+                <div class="detail-item">
+                  <span class="detail-label">Condition</span>
+                  <span id="detailCondition" class="detail-value"></span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Category</span>
+                  <span id="detailCategory" class="detail-value"></span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Added Date</span>
+                  <span id="detailDate" class="detail-value"></span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Availability</span>
+                  <span id="detailAvailable" class="detail-value available">Available</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="action-buttons">
+                <button class="btn btn-primary btn-lg" id="interestedBtn">
+                  <i class="uil uil-heart"></i> Mark as Interested
+                </button>
+                <button class="btn btn-secondary btn-lg" id="contactBtn">
+                  <i class="uil uil-comment-message"></i> Contact Owner
+                </button>
+                <a href="./trade-page.html?id=" id="tradeLink" class="btn btn-primary btn-lg">
+                  <i class="uil uil-exchange"></i> Trade for This Item
+                </a>
+              </div>
+
+              <!-- Additional Info -->
+              <div class="additional-info">
+                <h3 class="section-title">Additional Information</h3>
+                <ul class="info-list">
+                  <li><strong>Item Type:</strong> Second-hand item</li>
+                  <li><strong>Trade Status:</strong> Available for trade or donation</li>
+                  <li><strong>Shipping:</strong> Seller may offer local pickup or shipping</li>
+                  <li><strong>Returns:</strong> As per mutual agreement</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="./script.js"></script>
+    <script src="./page.js"></script>
+  </body>
+</html>
