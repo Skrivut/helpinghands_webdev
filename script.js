@@ -47,3 +47,64 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// ... (Your existing Dark Mode logic is here) ...
+
+// Function to handle form submission using Fetch API (AJAX)
+function handleFormSubmit(event) {
+    event.preventDefault(); // Stop the default page reload
+
+    const form = event.target;
+    const url = form.action;
+    const formData = new FormData(form);
+    const messageContainer = form.querySelector('.form-message'); // Target the specific message area
+
+    // Clear previous message
+    messageContainer.textContent = "Processing...";
+    messageContainer.style.color = "gray";
+
+    fetch(url, {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            messageContainer.style.color = 'green';
+            messageContainer.textContent = data.message;
+            form.reset(); 
+
+            // Handle successful login redirect
+            if (data.redirect) {
+                // Wait a moment for the user to see the success message
+                setTimeout(() => {
+                    window.location.href = data.redirect;
+                }, 1500); 
+            }
+        } else {
+            messageContainer.style.color = 'red';
+            messageContainer.textContent = data.message;
+        }
+    })
+    .catch(error => {
+        console.error('Fetch Error:', error);
+        messageContainer.textContent = "Connection error. Check your server.";
+        messageContainer.style.color = 'red';
+    });
+}
+
+// Attach listeners to the forms when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    // ... (Your Dark Mode event listener is here) ...
+
+    const signupForm = document.getElementById('signup-form');
+    const loginForm = document.getElementById('login-form');
+
+    if (signupForm) {
+        signupForm.addEventListener('submit', handleFormSubmit);
+    }
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleFormSubmit);
+    }
+});
