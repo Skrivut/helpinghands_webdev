@@ -45,59 +45,81 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to handle form submission using Fetch API (AJAX)
-    function handleFormSubmit(event) {
-        event.preventDefault(); // Stop the default page reload
+   // ... (Theme Toggle Code is great, keeping it) ...
 
-        const form = event.target;
-        const url = form.action;
-        const formData = new FormData(form);
-        const messageContainer = form.querySelector('.form-message'); // Target the specific message area
+// Function to handle form submission using Fetch API (AJAX)
+function handleFormSubmit(event) {
+    event.preventDefault(); // Stop the default page reload
 
-        // Clear previous message
-        messageContainer.textContent = "Processing...";
-        messageContainer.style.color = "gray";
+    const form = event.target;
+    const url = form.action;
+    const formData = new FormData(form);
 
-        fetch(url, {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                messageContainer.style.color = 'green';
-                messageContainer.textContent = data.message;
-                
-                // **SUCCESSFUL ACTION: CLEAR AND REDIRECT**
-                form.reset(); // Clear the form inputs
+    // *** FIX: Find the specific message container based on form ID ***
+    let messageContainer;
+    if (form.id === 'login-form') {
+        messageContainer = document.getElementById('login-message');
+    } else if (form.id === 'register-form') {
+        messageContainer = document.getElementById('register-message');
+    } else {
+        console.error("Unknown form ID submitted.");
+        return;
+    }
+    
+    // Clear previous message
+    messageContainer.textContent = "Processing...";
+    messageContainer.style.color = "gray";
 
-                if (data.redirect) {
-                    // Wait a moment for the user to see the success message
-                    setTimeout(() => {
-                        window.location.href = data.redirect; // This redirects the browser
-                    }, 1500); 
-                }
+    fetch(url, {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        // Check if the response is JSON (important for debugging)
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+            return response.json();
+        } else {
+            throw new Error(`Server did not return JSON. Check PHP file (${url}).`);
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            messageContainer.style.color = '#388E3C'; // Success green
+            messageContainer.textContent = data.message;
+            
+            // **SUCCESSFUL ACTION: CLEAR AND REDIRECT**
+            // The form reset needs to be here if you want to clear inputs before redirecting
+            
+            if (data.redirect) {
+                // Wait a moment for the user to see the success message
+                setTimeout(() => {
+                    window.location.href = data.redirect; // This redirects the browser
+                }, 1500); 
             } else {
-                messageContainer.style.color = 'red';
-                messageContainer.textContent = data.message;
+                 form.reset(); // Clear form if no redirect
             }
-        })
-        .catch(error => {
-            console.error('Fetch Error:', error);
-            messageContainer.textContent = "Connection error. Check your server.";
+        } else {
             messageContainer.style.color = 'red';
-        });
-    }
+            messageContainer.textContent = data.message;
+        }
+    })
+    .catch(error => {
+        console.error('Fetch Error:', error);
+        messageContainer.textContent = `Connection error. (Details: ${error.message})`;
+        messageContainer.style.color = 'red';
+    });
+}
 
-    // Attach listeners to the forms when the page loads
-    const signupForm = document.getElementById('signup-form');
-    const loginForm = document.getElementById('login-form');
+// Attach listeners to the forms when the page loads
+const registerForm = document.getElementById('register-form'); // Use 'register-form'
+const loginForm = document.getElementById('login-form');
 
-    if (signupForm) {
-        signupForm.addEventListener('submit', handleFormSubmit);
-    }
+if (registerForm) {
+    registerForm.addEventListener('submit', handleFormSubmit);
+}
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleFormSubmit);
-    }
+if (loginForm) {
+    loginForm.addEventListener('submit', handleFormSubmit);
+}
 });

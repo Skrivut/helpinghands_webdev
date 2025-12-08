@@ -1,28 +1,35 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const tradeOffers = [
-        {
-            id: 't1',
-            title: 'Handcrafted Oak Lantern',
-            description: 'Small oak lantern with glass panels. Adds rustic charm to any room.',
-            image: './images/oak_sign.png',
-            owner: { id: 'sarah-johnson', name: 'Sarah J.', avatar: './images/obsidian.jpg' }
-        },
-        {
-            id: 't2',
-            title: 'Obsidian Display Piece',
-            description: 'A glossy obsidian specimen ideal for collectors or display shelves.',
-            image: './images/obsidian.jpg',
-            owner: { id: 'mike-chen', name: 'Mike C.', avatar: './images/iron_chain.png' }
-        },
-        {
-            id: 't3',
-            title: 'Spruce Project Plank',
-            description: 'Ready-to-use spruce plank for your next DIY or furniture project.',
-            image: './images/spruce_plank.jpg',
-            owner: { id: 'emily-rodriguez', name: 'Emily R.', avatar: './images/spruce_plank.jpg' }
-        }
-    ];
+document.addEventListener('DOMContentLoaded', async () => {
+    const container = document.getElementById('tradeOffersContainer');
+    if (!container) return;
 
+    // Fetch items from backend API
+    try {
+        const response = await getAllItems();
+        
+        if (response.success && response.data.length > 0) {
+            // Use the first 3 items as trade offers
+            const tradeOffers = response.data.slice(0, 3).map(item => ({
+                id: item.id,
+                title: item.title,
+                description: item.description,
+                image: item.image_url,
+                owner: {
+                    id: item.owner_id,
+                    name: item.full_name,
+                    avatar: item.avatar_url
+                }
+            }));
+            
+            renderTradeOffers(tradeOffers);
+        } else {
+            console.error('Failed to fetch items from API:', response.error);
+        }
+    } catch (error) {
+        console.error('Error fetching items:', error);
+    }
+});
+
+function renderTradeOffers(tradeOffers) {
     const container = document.getElementById('tradeOffersContainer');
     if (!container) return;
 
@@ -70,4 +77,4 @@ document.addEventListener('DOMContentLoaded', () => {
         const el = createOfferCard(offer);
         container.appendChild(el);
     });
-});
+}

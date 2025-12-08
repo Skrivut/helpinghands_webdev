@@ -32,7 +32,7 @@ session_start();
             </button>
 
             <a
-                href="./login_signup.php"
+                href="./login_signup.html"
                 class="btn icon-btn"
                 aria-label="Login / Sign Up">
                 <i class="uil uil-user"></i>
@@ -49,7 +49,7 @@ session_start();
                     preventing landfill waste through honest, cash-free exchanges and
                     charitable donations.
                 </p>
-                <a href="./login_signup.php" class="btn btn-lg cta-main-btn">
+                <a href="./" class="btn btn-lg cta-main-btn">
                     Start Swapping Today
                 </a>
             </div>

@@ -1,30 +1,18 @@
 <?php
-// File: db_connect.php
+$db_host = 'localhost';
+$db_user = 'root';
+$db_pass = '';
+$db_name = 'swap_share_db';
+$db_port = 3307;
 
-/* Database credentials. Modify these constants as necessary */
-// 1. Database Host
-define('DB_SERVER', 'localhost');
+$conn = new mysqli($db_host, $db_user, $db_pass, $db_name, $db_port);
 
-// 2. Database Username (XAMPP default is typically 'root')
-define('DB_USERNAME', 'root');
-
-// 3. Database Password (XAMPP default is typically blank)
-define('DB_PASSWORD', '');
-
-// 4. Database Name (The name you created in phpMyAdmin)
-define('DB_NAME', 'swap_share_db');
-
-// 5. Database Port (Use the port you set in Step 1, e.g., 3307)
-define('DB_PORT', 3307);
-
-
-// Attempt to establish a connection using the mysqli object
-$conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_PORT);
-
-// Check connection
 if ($conn->connect_error) {
-    // If connection fails, stop execution and show the error
-    die("ERROR: Could not connect to the database. Check your XAMPP server and db_connect.php settings. " . $conn->connect_error);
+    error_log("Database connection failed: " . $conn->connect_error);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Database connection failed: ' . $conn->connect_error
+    ]);
+    exit;
 }
-
-// If connection is successful, $conn object is ready to use!
