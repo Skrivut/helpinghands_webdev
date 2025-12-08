@@ -5,7 +5,7 @@ require_once "db_connect.php";
 // Set response header to JSON for the JavaScript Fetch API
 header('Content-Type: application/json');
 
-$response = ["success" => false, "message" => ""];
+$response = ["success" => false, "message" => "", "redirect" => null];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 1. Collect and sanitize input
@@ -46,8 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_insert->bind_param("sss", $username, $email, $hashed_password);
 
         if ($stmt_insert->execute()) {
+            // **SUCCESSFUL REGISTRATION - SET REDIRECT**
             $response["success"] = true;
-            $response["message"] = "Registration successful! You can now log in.";
+            $response["message"] = "Registration successful! Redirecting to dashboard...";
+            $response["redirect"] = "dashboard.php"; // <--- ADDED REDIRECT URL
         } else {
             $response["message"] = "Database error: " . $conn->error;
         }

@@ -2,57 +2,48 @@
 session_start();
 require_once "db_connect.php";
 
-// Set response header to JSON for the JavaScript Fetch API
 header('Content-Type: application/json');
-
-$response = ["success" => false, "message" => "", "redirect" => ""];
+$response = ["success" => false, "message" => "", "redirect" => null];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // 1. Collect and sanitize input
-    $email = trim($_POST["logemail"]);
-    $password = trim($_POST["logpass"]);
+    $username = trim($_POST["username"]);
+    $password = trim($_POST["password"]);
 
-    if (empty($email) || empty($password)) {
-        $response["message"] = "Please enter both email and password.";
+    if (empty($username) || empty($password)) {
+        $response["message"] = "Please enter both username and password.";
         echo json_encode($response);
         exit;
     }
 
-    // 2. Prepare a SELECT statement
-    $sql = "SELECT id, username, password FROM users WHERE email = ?";
+    $sql = "SELECT id, username, password FROM users WHERE username = ?";
 
     if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("s", $email);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->store_result();
 
-        if ($stmt->execute()) {
-            $stmt->store_result();
+        if ($stmt->num_rows == 1) {
+            $stmt->bind_result($id, $db_username, $hashed_password);
 
-            if ($stmt->num_rows == 1) {
-                $stmt->bind_result($user_id, $username, $hashed_password);
-                $stmt->fetch();
-
-                // 3. Verify the password against the hash
+            if ($stmt->fetch() && $hashed_password !== null) {
+                // Verify password hash
                 if (password_verify($password, $hashed_password)) {
-                    // Password is correct, start session
+                    $hashed = password_hash($password, PASSWORD_DEFAULT);
                     $_SESSION["loggedin"] = true;
-                    $_SESSION["id"] = $user_id;
+                    $_SESSION["id"] = $id;
                     $_SESSION["username"] = $username;
 
                     $response["success"] = true;
-                    $response["message"] = "Login successful!";
-                    $response["redirect"] = "index.php"; // Redirect to index.php (needs to be renamed)
+                    $response["message"] = "Login successful! Redirecting...";
+                    $response["redirect"] = "dashboard.php"; // Redirect to dashboard
                 } else {
-                    $response["message"] = "Invalid email or password.";
+                    $response["message"] = "Invalid username or password.";
                 }
-            } else {
-                $response["message"] = "Invalid email or password.";
             }
         } else {
-            $response["message"] = "Oops! Something went wrong on the server.";
+            $response["message"] = "Invalid username or password.";
         }
         $stmt->close();
-    } else {
-        $response["message"] = "Server error preparing statement: " . $conn->error;
     }
 } else {
     $response["message"] = "Invalid request method.";

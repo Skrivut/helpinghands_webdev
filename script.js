@@ -8,13 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isDarkMode) {
             body.classList.add(darkModeClass);
             if (toggleButton) {
-                // Now only uses the SUN icon for Light Mode (when Dark Mode is ON)
                 toggleButton.innerHTML = '<i class="uil uil-sun"></i>';
             }
         } else {
             body.classList.remove(darkModeClass);
             if (toggleButton) {
-                // Now only uses the MOON icon for Dark Mode (when Light Mode is ON)
                 toggleButton.innerHTML = '<i class="uil uil-moon"></i>';
             }
         }
@@ -46,57 +44,52 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-});
 
-// ... (Your existing Dark Mode logic is here) ...
+    // Function to handle form submission using Fetch API (AJAX)
+    function handleFormSubmit(event) {
+        event.preventDefault(); // Stop the default page reload
 
-// Function to handle form submission using Fetch API (AJAX)
-function handleFormSubmit(event) {
-    event.preventDefault(); // Stop the default page reload
+        const form = event.target;
+        const url = form.action;
+        const formData = new FormData(form);
+        const messageContainer = form.querySelector('.form-message'); // Target the specific message area
 
-    const form = event.target;
-    const url = form.action;
-    const formData = new FormData(form);
-    const messageContainer = form.querySelector('.form-message'); // Target the specific message area
+        // Clear previous message
+        messageContainer.textContent = "Processing...";
+        messageContainer.style.color = "gray";
 
-    // Clear previous message
-    messageContainer.textContent = "Processing...";
-    messageContainer.style.color = "gray";
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                messageContainer.style.color = 'green';
+                messageContainer.textContent = data.message;
+                
+                // **SUCCESSFUL ACTION: CLEAR AND REDIRECT**
+                form.reset(); // Clear the form inputs
 
-    fetch(url, {
-        method: 'POST',
-        body: formData,
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            messageContainer.style.color = 'green';
-            messageContainer.textContent = data.message;
-            form.reset(); 
-
-            // Handle successful login redirect
-            if (data.redirect) {
-                // Wait a moment for the user to see the success message
-                setTimeout(() => {
-                    window.location.href = data.redirect;
-                }, 1500); 
+                if (data.redirect) {
+                    // Wait a moment for the user to see the success message
+                    setTimeout(() => {
+                        window.location.href = data.redirect; // This redirects the browser
+                    }, 1500); 
+                }
+            } else {
+                messageContainer.style.color = 'red';
+                messageContainer.textContent = data.message;
             }
-        } else {
+        })
+        .catch(error => {
+            console.error('Fetch Error:', error);
+            messageContainer.textContent = "Connection error. Check your server.";
             messageContainer.style.color = 'red';
-            messageContainer.textContent = data.message;
-        }
-    })
-    .catch(error => {
-        console.error('Fetch Error:', error);
-        messageContainer.textContent = "Connection error. Check your server.";
-        messageContainer.style.color = 'red';
-    });
-}
+        });
+    }
 
-// Attach listeners to the forms when the page loads
-document.addEventListener('DOMContentLoaded', () => {
-    // ... (Your Dark Mode event listener is here) ...
-
+    // Attach listeners to the forms when the page loads
     const signupForm = document.getElementById('signup-form');
     const loginForm = document.getElementById('login-form');
 
