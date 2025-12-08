@@ -18,11 +18,16 @@
 
   <body>
     <nav class="main-nav">
-      <h4 class="site-title">Helping Hands</h4>
-      <div class="nav-links">
-        <a href="./index.html" class="nav-link">Home</a>
-        <a href="./dashboard.html" class="nav-link">Dashboard</a>
-        <a href="./trade.html" class="nav-link">Trade</a>
+      <div style="display: flex; align-items: center; gap: 15px">
+        <button
+          onclick="window.location.href='./dashboard.html'"
+          class="btn icon-btn"
+          aria-label="Back to Dashboard"
+          title="Back to Dashboard"
+        >
+          <i class="uil uil-arrow-left"></i>
+        </button>
+        <h4 class="site-title">Helping Hands - Propose Trade</h4>
       </div>
       <div class="icon-buttons-group">
         <button
@@ -32,37 +37,40 @@
         >
           <i class="uil uil-moon"></i>
         </button>
-
-        <a
-          href="./login_signup.html"
-          class="btn icon-btn"
-          aria-label="Login / Sign Up"
-        >
-          <i class="uil uil-user"></i>
-        </a>
       </div>
     </nav>
 
     <div class="main-content-area">
       <section class="trade-section">
         <div class="trade-container">
-          <!-- Back Button -->
-          <a href="./page.html?id=" id="backLink" class="back-button">
-            <i class="uil uil-arrow-left"></i> Back to Item
-          </a>
-
           <div class="trade-wrapper">
             <!-- Left Side: Item Being Traded -->
             <div class="trade-item-section">
               <h2 class="section-title">You're Interested In</h2>
               <div class="trade-card item-card-display">
-                <img id="tradingItemImage" src="" alt="Item" class="trade-item-image" />
+                <img
+                  id="tradingItemImage"
+                  src="./images/oak_sign.png"
+                  alt="Item"
+                  class="trade-item-image"
+                />
                 <div class="trade-card-content">
-                  <h3 id="tradingItemName" class="trade-item-name"></h3>
-                  <p id="tradingItemDescription" class="trade-item-desc"></p>
+                  <h3 id="tradingItemName" class="trade-item-name">Oak Sign</h3>
+                  <p id="tradingItemDescription" class="trade-item-desc">
+                    Beautiful handcrafted oak sign, perfect for home decoration
+                    or outdoor use.
+                  </p>
                   <div class="trade-badges">
-                    <span id="tradingItemCondition" class="badge-condition"></span>
-                    <span id="tradingItemCategory" class="badge-category"></span>
+                    <span id="tradingItemCondition" class="badge-condition"
+                      >Good Condition</span
+                    >
+                    <span id="tradingItemCategory" class="badge-category"
+                      >Furniture</span
+                    >
+                  </div>
+                  <div class="item-owner-info">
+                    <i class="uil uil-user"></i>
+                    <span id="itemOwner">Owner: John Doe</span>
                   </div>
                 </div>
               </div>
@@ -93,29 +101,29 @@
             <h2 class="section-title">Trade Summary</h2>
             <div class="summary-card">
               <div class="summary-left">
-                <h4>You're Trading:</h4>
+                <h4>You're Offering:</h4>
                 <ul id="yourItemsList" class="items-list">
-                  <li>No items selected</li>
+                  <li class="no-items-text">No items selected yet</li>
                 </ul>
               </div>
               <div class="summary-center">
                 <i class="uil uil-exchange-alt"></i>
               </div>
               <div class="summary-right">
-                <h4>For:</h4>
+                <h4>In Exchange For:</h4>
                 <ul class="items-list">
-                  <li id="tradeSummaryItem"></li>
+                  <li id="tradeSummaryItem">Oak Sign</li>
                 </ul>
               </div>
             </div>
 
             <!-- Trade Details -->
             <div class="trade-details-form">
-              <h3 class="form-title">Trade Message</h3>
+              <h3 class="form-title">Trade Message (Optional)</h3>
               <textarea
                 id="tradeMessage"
                 class="form-control trade-textarea"
-                placeholder="Add a message to the owner explaining why you're interested in trading..."
+                placeholder="Add a message to the owner explaining why you're interested in this trade. For example: 'Hi! I love your oak sign and think my vintage coffee table would be a great exchange. It's in excellent condition and would complement your collection perfectly!'"
                 rows="4"
               ></textarea>
 
@@ -123,16 +131,19 @@
               <div class="trade-agreement">
                 <label class="checkbox-label">
                   <input type="checkbox" id="agreementCheckbox" />
-                  <span>I agree to the trade terms and conditions</span>
+                  <span
+                    >I agree to meet in a safe public location and follow the
+                    community trade guidelines</span
+                  >
                 </label>
               </div>
 
               <!-- Action Buttons -->
               <div class="trade-action-buttons">
-                <button class="btn btn-primary btn-lg" id="submitTradeBtn">
+                <button class="btn-primary btn-lg" id="submitTradeBtn" disabled>
                   <i class="uil uil-check-circle"></i> Submit Trade Proposal
                 </button>
-                <button class="btn btn-secondary btn-lg" id="cancelTradeBtn">
+                <button class="btn-secondary btn-lg" id="cancelTradeBtn">
                   <i class="uil uil-times"></i> Cancel
                 </button>
               </div>
@@ -143,6 +154,223 @@
     </div>
 
     <script src="./script.js"></script>
-    <script src="./trade-page.js"></script>
+    <script>
+      // Sample user items (this would come from your database)
+      const userItems = [
+        {
+          id: 1,
+          name: "Vintage Coffee Table",
+          image: "./images/spruce_plank.jpg",
+          condition: "Like New",
+        },
+        {
+          id: 2,
+          name: "Garden Tools Set",
+          image: "./images/iron_chain.png",
+          condition: "Good",
+        },
+        {
+          id: 3,
+          name: "Stone Collection",
+          image: "./images/stone-brick.png",
+          condition: "Excellent",
+        },
+        {
+          id: 4,
+          name: "Decorative Plates",
+          image: "./images/obsidian.jpg",
+          condition: "Very Good",
+        },
+      ];
+
+      let selectedItems = [];
+
+      // Initialize the page
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check if user is logged in
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (!currentUser) {
+          alert("Please log in to make trade proposals");
+          window.location.href = "./login_signup.html";
+          return;
+        }
+
+        // Get item ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const itemId = urlParams.get("id");
+
+        if (itemId) {
+          loadItemDetails(itemId);
+        }
+
+        loadUserItems();
+        setupEventListeners();
+      });
+
+      // Load the item details being traded for
+      function loadItemDetails(itemId) {
+        // In a real app, you'd fetch this from your backend
+        // For now, we'll use sample data
+        console.log("Loading item:", itemId);
+      }
+
+      // Load user's items
+      function loadUserItems() {
+        const container = document.getElementById("yourItemsContainer");
+        container.innerHTML = "";
+
+        if (userItems.length === 0) {
+          container.innerHTML =
+            '<p style="text-align: center; color: #7f8c8d;">You don\'t have any items yet. Add items to your inventory first!</p>';
+          return;
+        }
+
+        userItems.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "your-item-card";
+          card.dataset.itemId = item.id;
+
+          card.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" class="your-item-image" />
+            <div class="your-item-info">
+              <div class="your-item-name">${item.name}</div>
+              <div class="your-item-condition">${item.condition}</div>
+            </div>
+            <input type="checkbox" class="your-item-checkbox" data-item-id="${item.id}" />
+          `;
+
+          card.addEventListener("click", function (e) {
+            if (e.target.type !== "checkbox") {
+              const checkbox = card.querySelector(".your-item-checkbox");
+              checkbox.checked = !checkbox.checked;
+              checkbox.dispatchEvent(new Event("change"));
+            }
+          });
+
+          container.appendChild(card);
+        });
+
+        // Add event listeners to checkboxes
+        document.querySelectorAll(".your-item-checkbox").forEach((checkbox) => {
+          checkbox.addEventListener("change", handleItemSelection);
+        });
+      }
+
+      // Handle item selection
+      function handleItemSelection(e) {
+        const itemId = parseInt(e.target.dataset.itemId);
+        const card = e.target.closest(".your-item-card");
+
+        if (e.target.checked) {
+          selectedItems.push(itemId);
+          card.classList.add("selected");
+        } else {
+          selectedItems = selectedItems.filter((id) => id !== itemId);
+          card.classList.remove("selected");
+        }
+
+        updateTradeSummary();
+        updateSubmitButton();
+      }
+
+      // Update trade summary
+      function updateTradeSummary() {
+        const listElement = document.getElementById("yourItemsList");
+
+        if (selectedItems.length === 0) {
+          listElement.innerHTML =
+            '<li class="no-items-text">No items selected yet</li>';
+        } else {
+          const selectedItemNames = selectedItems
+            .map((id) => {
+              const item = userItems.find((i) => i.id === id);
+              return `<li>${item.name}</li>`;
+            })
+            .join("");
+
+          listElement.innerHTML = selectedItemNames;
+        }
+      }
+
+      // Update submit button state
+      function updateSubmitButton() {
+        const submitBtn = document.getElementById("submitTradeBtn");
+        const agreementCheckbox = document.getElementById("agreementCheckbox");
+
+        if (selectedItems.length > 0 && agreementCheckbox.checked) {
+          submitBtn.disabled = false;
+        } else {
+          submitBtn.disabled = true;
+        }
+      }
+
+      // Setup event listeners
+      function setupEventListeners() {
+        // Agreement checkbox
+        document
+          .getElementById("agreementCheckbox")
+          .addEventListener("change", updateSubmitButton);
+
+        // Submit trade button
+        document
+          .getElementById("submitTradeBtn")
+          .addEventListener("click", submitTrade);
+
+        // Cancel button
+        document
+          .getElementById("cancelTradeBtn")
+          .addEventListener("click", function () {
+            if (
+              confirm("Are you sure you want to cancel this trade proposal?")
+            ) {
+              window.location.href = "./dashboard.html";
+            }
+          });
+
+        // Add item button
+        document
+          .getElementById("addItemBtn")
+          .addEventListener("click", function () {
+            alert(
+              "Feature coming soon! You will be able to add items to your inventory."
+            );
+          });
+      }
+
+      // Submit trade proposal
+      function submitTrade() {
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        const message = document.getElementById("tradeMessage").value;
+        const tradingItemName =
+          document.getElementById("tradingItemName").textContent;
+
+        const selectedItemNames = selectedItems.map((id) => {
+          const item = userItems.find((i) => i.id === id);
+          return item.name;
+        });
+
+        // In a real app, you'd send this to your backend
+        const tradeProposal = {
+          from: currentUser.username,
+          to: "John Doe", // Would be dynamic based on item owner
+          offeringItems: selectedItemNames,
+          requestingItem: tradingItemName,
+          message: message,
+          timestamp: new Date().toISOString(),
+        };
+
+        console.log("Trade proposal:", tradeProposal);
+
+        // Show success message
+        alert(
+          `Trade proposal submitted successfully!\n\nYou're offering: ${selectedItemNames.join(
+            ", "
+          )}\nFor: ${tradingItemName}\n\nThe owner will be notified and can accept or decline your offer.`
+        );
+
+        // Redirect to dashboard
+        window.location.href = "./dashboard.html";
+      }
+    </script>
   </body>
 </html>
