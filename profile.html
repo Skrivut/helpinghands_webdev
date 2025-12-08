@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Profile - Helping Hands</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./profile.css" />
+  </head>
+
+  <body>
+    <nav class="main-nav">
+      <h4 class="site-title">Helping Hands</h4>
+      <div class="nav-links">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./dashboard.html" class="nav-link">Dashboard</a>
+        <a href="./trade.html" class="nav-link">Trade</a>
+      </div>
+      <div class="icon-buttons-group">
+        <button
+          id="theme-toggle"
+          class="btn icon-btn"
+          aria-label="Toggle Dark Mode"
+        >
+          <i class="uil uil-moon"></i>
+        </button>
+
+        <a
+          href="./login_signup.html"
+          class="btn icon-btn"
+          aria-label="Login / Sign Up"
+        >
+          <i class="uil uil-user"></i>
+        </a>
+      </div>
+    </nav>
+
+    <div class="main-content-area">
+      <section class="profile-section">
+        <div class="profile-container">
+          <!-- Profile Header -->
+          <div class="profile-header">
+            <div class="profile-cover" id="profileCover">
+              <button class="edit-background-btn" id="editBackgroundBtn" title="Change Background">
+                <i class="uil uil-image"></i>
+              </button>
+            </div>
+            <input type="file" id="backgroundUpload" style="display: none" accept="image/*" />
+
+            <div class="profile-info-wrapper">
+              <div class="profile-avatar">
+                <img id="profileAvatar" src="./images/oak_sign.png" alt="Profile Avatar" />
+                <button class="edit-avatar-btn" id="editAvatarBtn">
+                  <i class="uil uil-camera"></i>
+                </button>
+                <input type="file" id="avatarUpload" style="display: none" accept="image/*" />
+              </div>
+
+              <div class="profile-details">
+                <h1 id="profileName" class="profile-name">John Doe</h1>
+                <p id="profileStatus" class="profile-status">
+                  <span class="status-indicator"></span> Active
+                </p>
+                <p id="profileLocation" class="profile-location">
+                  <i class="uil uil-map-marker"></i> Cebu City, Philippines
+                </p>
+                <p id="profileBio" class="profile-bio">
+                  Passionate about sustainable living and trading quality items.
+                </p>
+
+                <div class="profile-stats">
+                  <div class="stat-item">
+                    <span class="stat-number" id="tradeCount">5</span>
+                    <span class="stat-label">Successful Trades</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-number" id="itemCount">12</span>
+                    <span class="stat-label">Items Listed</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-number" id="ratingCount">4.8</span>
+                    <span class="stat-label">Rating</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="profile-actions">
+                <button class="btn-edit-profile" id="editProfileBtn">
+                  <i class="uil uil-edit"></i> Edit Profile
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Tabs -->
+          <div class="profile-tabs">
+            <button class="tab-btn active" data-tab="trades">
+              <i class="uil uil-exchange"></i> Trade Offers
+            </button>
+            <button class="tab-btn" data-tab="items">
+              <i class="uil uil-list"></i> My Items
+            </button>
+            <button class="tab-btn" data-tab="about">
+              <i class="uil uil-info-circle"></i> About
+            </button>
+          </div>
+
+          <!-- Tab Content -->
+
+          <!-- Trade Offers Tab -->
+          <div class="tab-content active" id="trades-tab">
+            <div class="trades-header">
+              <h2 class="section-title">Pending Trade Offers</h2>
+              <p class="trades-subtitle">Review and manage all incoming trade proposals</p>
+            </div>
+
+            <div id="tradeOffersContainer" class="trades-grid">
+              <!-- Trade offers will be populated here -->
+            </div>
+          </div>
+
+          <!-- My Items Tab -->
+          <div class="tab-content" id="items-tab">
+            <div class="items-header">
+              <h2 class="section-title">My Items for Trade</h2>
+              <button class="btn btn-add-item">
+                <i class="uil uil-plus"></i> Add New Item
+              </button>
+            </div>
+
+            <div id="myItemsContainer" class="items-grid">
+              <!-- User's items will be populated here -->
+            </div>
+          </div>
+
+          <!-- About Tab -->
+          <div class="tab-content" id="about-tab">
+            <div class="about-content">
+              <h2 class="section-title">About</h2>
+
+              <div class="about-section">
+                <h3 class="about-subtitle">Member Information</h3>
+                <div class="info-grid">
+                  <div class="info-item">
+                    <span class="info-label">Member Since:</span>
+                    <span class="info-value">January 2024</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="info-label">Location:</span>
+                    <span class="info-value">Cebu City, Philippines</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="info-label">Total Trades:</span>
+                    <span class="info-value">12</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="info-label">User Rating:</span>
+                    <span class="info-value">4.8/5.0 ⭐</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="about-section">
+                <h3 class="about-subtitle">Bio</h3>
+                <p class="about-text">
+                  I'm passionate about sustainable living and reducing waste. I love trading
+                  quality items and helping the community. Always looking for interesting items
+                  to trade and new people to connect with.
+                </p>
+              </div>
+
+              <div class="about-section">
+                <h3 class="about-subtitle">Recently Viewed Items</h3>
+                <div class="recent-items-grid">
+                  <div class="recent-item">
+                    <img src="./images/oak_sign.png" alt="Item" />
+                    <span>Oak Sign</span>
+                  </div>
+                  <div class="recent-item">
+                    <img src="./images/obsidian.jpg" alt="Item" />
+                    <span>Obsidian Stone</span>
+                  </div>
+                  <div class="recent-item">
+                    <img src="./images/spruce_plank.jpg" alt="Item" />
+                    <span>Spruce Plank</span>
+                  </div>
+                  <div class="recent-item">
+                    <img src="./images/iron_chain.png" alt="Item" />
+                    <span>Iron Chain</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Background Color Picker Modal -->
+    <div class="modal" id="backgroundModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Change Background</h2>
+          <button class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="background-options">
+            <h3 class="bg-section-title">Preset Colors</h3>
+            <div class="color-grid">
+              <div class="color-option" data-color="linear-gradient(135deg, #667eea 0%, #764ba2 100%)" title="Purple">
+                <div class="color-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                <span>Purple</span>
+              </div>
+              <div class="color-option" data-color="linear-gradient(135deg, #f093fb 0%, #f5576c 100%)" title="Pink">
+                <div class="color-preview" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                <span>Pink</span>
+              </div>
+              <div class="color-option" data-color="linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)" title="Blue">
+                <div class="color-preview" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                <span>Blue</span>
+              </div>
+              <div class="color-option" data-color="linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)" title="Green">
+                <div class="color-preview" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+                <span>Green</span>
+              </div>
+              <div class="color-option" data-color="linear-gradient(135deg, #fa709a 0%, #fee140 100%)" title="Sunset">
+                <div class="color-preview" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                <span>Sunset</span>
+              </div>
+              <div class="color-option" data-color="linear-gradient(135deg, #30cfd0 0%, #330867 100%)" title="Ocean">
+                <div class="color-preview" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></div>
+                <span>Ocean</span>
+              </div>
+            </div>
+
+            <h3 class="bg-section-title">Upload Image</h3>
+            <div class="upload-area" id="uploadArea">
+              <i class="uil uil-cloud-upload"></i>
+              <p>Click to upload or drag and drop</p>
+              <span>PNG, JPG, GIF up to 5MB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Profile</h2>
+          <button class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="editName">Name</label>
+            <input type="text" id="editName" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="editLocation">Location</label>
+            <input type="text" id="editLocation" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="editBio">Bio</label>
+            <textarea id="editBio" class="form-control" rows="4"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+          <button class="btn btn-primary" id="saveEditBtn">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trade Details Modal -->
+    <div class="modal" id="tradeDetailsModal">
+      <div class="modal-content trade-modal-content">
+        <div class="modal-header">
+          <h2>Trade Details</h2>
+          <button class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body" id="tradeDetailsBody">
+          <!-- Trade details will be populated here -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="rejectTradeBtn">Reject</button>
+          <button class="btn btn-primary" id="acceptTradeBtn">Accept Trade</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+    <script src="./profile.js"></script>
+  </body>
+</html>

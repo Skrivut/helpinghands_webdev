@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Profile - Helping Hands</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./visit_profile.css" />
+  </head>
+
+  <body>
+    <nav class="main-nav">
+      <h4 class="site-title">Helping Hands</h4>
+      <div class="nav-links">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./dashboard.html" class="nav-link">Dashboard</a>
+        <a href="./trade.html" class="nav-link">Trade</a>
+      </div>
+      <div class="icon-buttons-group">
+        <button
+          id="theme-toggle"
+          class="btn icon-btn"
+          aria-label="Toggle Dark Mode"
+        >
+          <i class="uil uil-moon"></i>
+        </button>
+
+        <a
+          href="./login_signup.html"
+          class="btn icon-btn"
+          aria-label="Login / Sign Up"
+        >
+          <i class="uil uil-user"></i>
+        </a>
+      </div>
+    </nav>
+
+    <div class="main-content-area">
+      <section class="visit-profile-section">
+        <div class="visit-profile-container">
+          <!-- Back Button -->
+          <a href="./dashboard.html" class="back-button">
+            <i class="uil uil-arrow-left"></i> Back to Dashboard
+          </a>
+
+          <!-- Profile Header -->
+          <div class="visit-profile-header">
+            <div class="visit-profile-cover"></div>
+
+            <div class="visit-profile-info-wrapper">
+              <div class="visit-profile-avatar">
+                <img id="visitProfileAvatar" src="./images/oak_sign.png" alt="Profile Avatar" />
+              </div>
+
+              <div class="visit-profile-details">
+                <h1 id="visitProfileName" class="visit-profile-name">Sarah Johnson</h1>
+                <p id="visitProfileStatus" class="visit-profile-status">
+                  <span class="visit-status-indicator"></span> Active
+                </p>
+                <p id="visitProfileLocation" class="visit-profile-location">
+                  <i class="uil uil-map-marker"></i> Cebu City, Philippines
+                </p>
+                <p id="visitProfileBio" class="visit-profile-bio">
+                  Passionate about sustainable trading and helping the community.
+                </p>
+
+                <div class="visit-profile-stats">
+                  <div class="visit-stat-item">
+                    <span class="visit-stat-number" id="visitTradeCount">8</span>
+                    <span class="visit-stat-label">Successful Trades</span>
+                  </div>
+                  <div class="visit-stat-item">
+                    <span class="visit-stat-number" id="visitItemCount">15</span>
+                    <span class="visit-stat-label">Items Listed</span>
+                  </div>
+                  <div class="visit-stat-item">
+                    <span class="visit-stat-number" id="visitRatingCount">4.9</span>
+                    <span class="visit-stat-label">Rating</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="visit-profile-actions">
+                <button class="btn-message-user" id="messageUserBtn">
+                  <i class="uil uil-comment-message"></i> Message
+                </button>
+                <button class="btn-add-friend" id="addFriendBtn">
+                  <i class="uil uil-user-plus"></i> Add Friend
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Tabs -->
+          <div class="visit-profile-tabs">
+            <button class="visit-tab-btn active" data-tab="items">
+              <i class="uil uil-list"></i> Items for Trade
+            </button>
+            <button class="visit-tab-btn" data-tab="reviews">
+              <i class="uil uil-star"></i> Reviews
+            </button>
+            <button class="visit-tab-btn" data-tab="about">
+              <i class="uil uil-info-circle"></i> About
+            </button>
+          </div>
+
+          <!-- Tab Content -->
+
+          <!-- Items Tab -->
+          <div class="visit-tab-content active" id="items-tab">
+            <div class="visit-items-header">
+              <h2 class="visit-section-title">Items Available for Trade</h2>
+              <p class="visit-items-subtitle">Browse items this user is willing to trade</p>
+            </div>
+
+            <div id="visitItemsContainer" class="visit-items-grid">
+              <!-- User's items will be populated here -->
+            </div>
+          </div>
+
+          <!-- Reviews Tab -->
+          <div class="visit-tab-content" id="reviews-tab">
+            <div class="visit-reviews-header">
+              <h2 class="visit-section-title">User Reviews</h2>
+              <div class="visit-rating-summary">
+                <div class="visit-rating-display">
+                  <span class="visit-rating-number" id="visitRatingNumber">4.9</span>
+                  <div class="visit-rating-stars">
+                    <i class="uil uil-star"></i>
+                    <i class="uil uil-star"></i>
+                    <i class="uil uil-star"></i>
+                    <i class="uil uil-star"></i>
+                    <i class="uil uil-star"></i>
+                  </div>
+                  <p class="visit-rating-count">Based on 12 reviews</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="visitReviewsContainer" class="visit-reviews-list">
+              <!-- Reviews will be populated here -->
+            </div>
+          </div>
+
+          <!-- About Tab -->
+          <div class="visit-tab-content" id="about-tab">
+            <div class="visit-about-content">
+              <h2 class="visit-section-title">About</h2>
+
+              <div class="visit-about-section">
+                <h3 class="visit-about-subtitle">Member Information</h3>
+                <div class="visit-info-grid">
+                  <div class="visit-info-item">
+                    <span class="visit-info-label">Member Since:</span>
+                    <span class="visit-info-value">March 2024</span>
+                  </div>
+                  <div class="visit-info-item">
+                    <span class="visit-info-label">Location:</span>
+                    <span class="visit-info-value">Cebu City, Philippines</span>
+                  </div>
+                  <div class="visit-info-item">
+                    <span class="visit-info-label">Total Trades:</span>
+                    <span class="visit-info-value">18</span>
+                  </div>
+                  <div class="visit-info-item">
+                    <span class="visit-info-label">User Rating:</span>
+                    <span class="visit-info-value">4.9/5.0 ⭐</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="visit-about-section">
+                <h3 class="visit-about-subtitle">Bio</h3>
+                <p class="visit-about-text">
+                  I'm passionate about sustainable living and building a community dedicated to 
+                  reducing waste. I love trading quality items and connecting with people who share 
+                  the same values. Always looking for new items to trade and always open to fair deals.
+                </p>
+              </div>
+
+              <div class="visit-about-section">
+                <h3 class="visit-about-subtitle">Trading Guidelines</h3>
+                <ul class="visit-guidelines-list">
+                  <li>All items must be in good or excellent condition</li>
+                  <li>Honest descriptions and accurate photos required</li>
+                  <li>Trades can be arranged for local pickup or shipping</li>
+                  <li>All transactions are final once agreed upon</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Message Modal -->
+    <div class="modal" id="messageModal">
+      <div class="modal-content visit-message-modal">
+        <div class="modal-header">
+          <h2>Send Message</h2>
+          <button class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="visit-message-recipient">
+            <img id="messageUserAvatar" src="" alt="User" />
+            <div>
+              <h4 id="messageUserName"></h4>
+              <p>Online</p>
+            </div>
+          </div>
+          <textarea
+            id="messageContent"
+            class="form-control visit-message-textarea"
+            placeholder="Write your message here..."
+            rows="6"
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="cancelMessageBtn">Cancel</button>
+          <button class="btn btn-primary" id="sendMessageBtn">Send Message</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Item Details Modal -->
+    <div class="modal" id="itemDetailsModal">
+      <div class="modal-content visit-item-modal">
+        <div class="modal-header">
+          <h2>Item Details</h2>
+          <button class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body" id="itemDetailsBody">
+          <!-- Item details will be populated here -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="closeItemBtn">Close</button>
+          <button class="btn btn-primary" id="interestedBtn">
+            <i class="uil uil-heart"></i> I'm Interested
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+    <script src="./visit_profile.js"></script>
+  </body>
+</html>
