@@ -45,8 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-   // ... (Theme Toggle Code is great, keeping it) ...
-
 // Function to handle form submission using Fetch API (AJAX)
 function handleFormSubmit(event) {
     event.preventDefault(); // Stop the default page reload
@@ -88,8 +86,23 @@ function handleFormSubmit(event) {
             messageContainer.style.color = '#388E3C'; // Success green
             messageContainer.textContent = data.message;
             
-            // **SUCCESSFUL ACTION: CLEAR AND REDIRECT**
-            // The form reset needs to be here if you want to clear inputs before redirecting
+            // **SAVE USER DATA TO LOCALSTORAGE FOR LOGIN**
+            if (form.id === 'login-form') {
+                // Get username from PHP response or form
+                const username = data.username || formData.get('username');
+                
+                // Save user data to localStorage
+                const userData = {
+                    username: username,
+                    loggedIn: true,
+                    loginTime: new Date().toISOString(),
+                    bio: 'Passionate about sustainable living and trading quality items.',
+                    location: 'Cebu City, Philippines'
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(userData));
+                console.log('User data saved to localStorage:', userData);
+            }
             
             if (data.redirect) {
                 // Wait a moment for the user to see the success message

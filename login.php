@@ -1,24 +1,20 @@
 <?php
-// File: login_action.php
+// File: login.php
 
 session_start();
-require_once "db_connect.php"; // Connect to the database
+require_once "db_connect.php";
 
-// Set the response header to JSON format
 header('Content-Type: application/json');
 
-// Initialize the response array
-$response = ["success" => false, "message" => "An unknown error occurred.", "redirect" => null];
+$response = ["success" => false, "message" => "An unknown error occurred.", "redirect" => null, "username" => null];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Add check for database connection
     if (!isset($conn) || $conn->connect_error) {
         $response["message"] = "Database connection error.";
         echo json_encode($response);
         exit;
     }
 
-    // 1. Get and sanitize input
     $username = trim($_POST["username"] ?? '');
     $password = trim($_POST["password"] ?? '');
 
@@ -28,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // 2. Prepare SQL statement to fetch user data
     $sql = "SELECT id, username, password FROM users WHERE username = ?";
 
     if ($stmt = $conn->prepare($sql)) {
@@ -40,16 +35,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_result($id, $db_username, $hashed_password);
 
             if ($stmt->fetch() && $hashed_password !== null) {
-                // 4. Verify password hash
                 if (password_verify($password, $hashed_password)) {
-                    // Password is correct, start a new session
                     $_SESSION["loggedin"] = true;
                     $_SESSION["id"] = $id;
                     $_SESSION["username"] = $db_username;
 
                     $response["success"] = true;
                     $response["message"] = "Login successful! Redirecting...";
-                    $response["redirect"] = "dashboard.html"; // Changed to dashboard.html
+                    $response["redirect"] = "dashboard.html";
+                    $response["username"] = $db_username; // ADD THIS LINE
                 } else {
                     $response["message"] = "Invalid username or password.";
                 }
@@ -57,7 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $response["message"] = "User found but data is corrupted.";
             }
         } else {
-            // User not found
             $response["message"] = "Invalid username or password.";
         }
         $stmt->close();

@@ -428,7 +428,6 @@
                       <div id="login-form" class="section text-center">
                         <h4 class="mb-4 pb-3">Log In</h4>
 
-                        <!-- Message container for login -->
                         <p
                           id="login-message"
                           style="color: red; font-size: 14px; min-height: 20px"
@@ -485,7 +484,6 @@
                       <div id="register-form" class="section text-center">
                         <h4 class="mb-4 pb-3">Sign Up</h4>
 
-                        <!-- Message container for registration -->
                         <p
                           id="register-message"
                           style="color: red; font-size: 14px; min-height: 20px"
@@ -590,7 +588,7 @@
         }
       });
 
-      // Login Handler with Backend Integration
+      // Login Handler with localStorage Support
       async function handleLogin() {
         const username = document.getElementById("logusername").value.trim();
         const password = document.getElementById("logpass").value.trim();
@@ -621,8 +619,20 @@
             messageContainer.style.color = "#388E3C";
             messageContainer.textContent = data.message;
 
+            // *** SAVE USER DATA TO LOCALSTORAGE ***
+            const userData = {
+              username: data.username || username,
+              loggedIn: true,
+              loginTime: new Date().toISOString(),
+              bio: "Passionate about sustainable living and trading quality items.",
+              location: "Cebu City, Philippines",
+            };
+
+            localStorage.setItem("currentUser", JSON.stringify(userData));
+            console.log("User data saved to localStorage:", userData);
+
             setTimeout(() => {
-              window.location.href = data.redirect || "dashboard.php";
+              window.location.href = data.redirect || "dashboard.html";
             }, 500);
           } else {
             messageContainer.style.color = "red";
