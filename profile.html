@@ -64,6 +64,30 @@
         color: #2c3e50;
       }
 
+      /* NEW STYLE FOR MY ITEMS BUTTON */
+      .btn-view-items {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        text-decoration: none;
+      }
+
+      .btn-view-items:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        color: white;
+        text-decoration: none;
+      }
+
       /* Include rest of profile.css styles or link the file */
     </style>
     <link rel="stylesheet" href="./profile.css" />
@@ -181,11 +205,17 @@
           <div class="tab-content" id="items-tab">
             <div class="items-header">
               <h2 class="section-title">My Items for Trade</h2>
-              <button class="btn btn-add-item">
-                <i class="uil uil-plus"></i> Add New Item
-              </button>
+              <!-- UPDATED BUTTON - NOW LINKS THROUGH BRIDGE -->
+              <a href="bridge_login.php" class="btn-view-items">
+                <i class="uil uil-box"></i> View All Items
+              </a>
             </div>
-            <div id="myItemsContainer" class="items-grid"></div>
+            <div id="myItemsContainer" class="items-grid">
+              <div style="text-align: center; padding: 40px; color: #666;">
+                <i class="uil uil-box" style="font-size: 3rem; opacity: 0.5;"></i>
+                <p style="margin-top: 20px;">Click "View All Items" to manage your items for trade</p>
+              </div>
+            </div>
           </div>
 
           <div class="tab-content" id="about-tab">
