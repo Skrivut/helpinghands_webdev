@@ -1,175 +1,181 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    // Load all items for the main dashboard grid
-    await loadAllItems();
+// dashboard.js - Load dynamic items from database
+
+// Add this at the very top of dashboard.js temporarily
+console.log('Attempting to fetch items...');
+
+fetch('get_dashboard_items.php')
+    .then(response => {
+        console.log('Response status:', response.status);
+        return response.text(); // Get raw response first
+    })
+    .then(text => {
+        console.log('Raw response:', text);
+        try {
+            const data = JSON.parse(text);
+            console.log('Parsed data:', data);
+        } catch(e) {
+            console.error('JSON parse error:', e);
+        }
+    });
     
-    // Load recent trade offers
-    await loadTradeOffers();
+document.addEventListener('DOMContentLoaded', function() {
+    loadAvailableItems();
+    loadTradeOffers();
 });
 
-async function loadAllItems() {
-    const dashboardGrid = document.querySelector('.dashboard-grid');
-    if (!dashboardGrid) return;
+function loadAvailableItems() {
+    const grid = document.querySelector('.dashboard-grid');
+    
+    fetch('get_dashboard_items.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                displayItems(data.items, grid);
+            } else {
+                showError(grid, data.message || 'Failed to load items');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading items:', error);
+            showError(grid, 'Failed to load items. Please try again.');
+        });
+}
 
-    try {
-        const response = await getAllItems();
-        
-        if (response.success && response.data.length > 0) {
-            // Clear placeholder items
-            dashboardGrid.innerHTML = '';
-            
-            // Render all items
-            response.data.forEach(item => {
-                const itemCard = createItemCard(item);
-                dashboardGrid.appendChild(itemCard);
-            });
-        } else {
-            dashboardGrid.innerHTML = '<p class="text-center col-12">No items available at the moment.</p>';
-            console.error('Failed to fetch items:', response.error);
-        }
-    } catch (error) {
-        console.error('Error loading items:', error);
-        dashboardGrid.innerHTML = '<p class="text-center col-12">Error loading items. Please try again later.</p>';
+function displayItems(items, container) {
+    if (items.length === 0) {
+        container.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <i class="uil uil-shopping-cart-alt" style="font-size: 3rem; color: #bdc3c7;"></i>
+                <p class="mt-3">No items available yet. Be the first to list an item!</p>
+            </div>
+        `;
+        return;
     }
+
+    container.innerHTML = items.map(item => `
+        <a href="./page.html?id=${item.id}" class="item-card item-card-link">
+            <div class="item-image-container">
+                <img
+                    src="${item.image_path || './images/placeholder.jpg'}"
+                    alt="${escapeHtml(item.item_name)}"
+                    class="item-image"
+                    onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'"
+                />
+            </div>
+            <div class="item-content">
+                <h3 class="item-name">${escapeHtml(item.item_name)}</h3>
+                <p class="item-description">
+                    ${escapeHtml(item.description || 'No description available')}
+                </p>
+                <div class="item-meta">
+                    <span class="item-condition">${escapeHtml(item.item_condition)}</span>
+                    <span class="item-category">${escapeHtml(item.category)}</span>
+                </div>
+                <div class="item-owner" style="margin-top: 10px; font-size: 0.9rem; color: #7f8c8d;">
+                    <i class="uil uil-user"></i> Listed by: <strong>${escapeHtml(item.owner_name)}</strong>
+                </div>
+            </div>
+        </a>
+    `).join('');
 }
 
-function createItemCard(item) {
-    const card = document.createElement('a');
-    card.href = `./page.html?id=${encodeURIComponent(item.id)}`;
-    card.className = 'item-card item-card-link';
-    
-    // Image container
-    const imageContainer = document.createElement('div');
-    imageContainer.className = 'item-image-container';
-    
-    const img = document.createElement('img');
-    img.src = item.image_path || './images/placeholder.png';
-    img.alt = item.item_name;
-    img.className = 'item-image';
-    img.onerror = function() {
-        this.src = './images/placeholder.png';
-    };
-    imageContainer.appendChild(img);
-    
-    // Content container
-    const content = document.createElement('div');
-    content.className = 'item-content';
-    
-    const name = document.createElement('h3');
-    name.className = 'item-name';
-    name.textContent = item.item_name;
-    
-    const description = document.createElement('p');
-    description.className = 'item-description';
-    description.textContent = item.description || 'No description available';
-    
-    // Meta information
-    const meta = document.createElement('div');
-    meta.className = 'item-meta';
-    
-    const condition = document.createElement('span');
-    condition.className = 'item-condition';
-    condition.textContent = formatCondition(item.item_condition);
-    
-    const category = document.createElement('span');
-    category.className = 'item-category';
-    category.textContent = item.category || 'General';
-    
-    meta.appendChild(condition);
-    meta.appendChild(category);
-    
-    content.appendChild(name);
-    content.appendChild(description);
-    content.appendChild(meta);
-    
-    card.appendChild(imageContainer);
-    card.appendChild(content);
-    
-    return card;
-}
-
-function formatCondition(condition) {
-    if (!condition) return 'Good Condition';
-    
-    // Convert condition to proper case
-    return condition
-        .split('_')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-        .join(' ');
-}
-
-async function loadTradeOffers() {
+function loadTradeOffers() {
     const container = document.getElementById('tradeOffersContainer');
-    if (!container) return;
-
-    try {
-        const response = await getAllItems();
-        
-        if (response.success && response.data.length > 0) {
-            // Get the most recent 3 items as trade offers
-            const recentItems = response.data
-                .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                .slice(0, 3);
-            
-            // Clear container
-            container.innerHTML = '';
-            
-            // Render trade offers
-            recentItems.forEach(item => {
-                const offerCard = createOfferCard(item);
-                container.appendChild(offerCard);
-            });
-        } else {
-            container.innerHTML = '<p class="text-center col-12">No recent trade offers available.</p>';
-        }
-    } catch (error) {
-        console.error('Error fetching trade offers:', error);
-        container.innerHTML = '<p class="text-center col-12">Error loading trade offers.</p>';
-    }
+    
+    fetch('get_trade_offers.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                displayTradeOffers(data.offers, container);
+            } else {
+                showError(container, data.message || 'Failed to load trade offers');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading trade offers:', error);
+            showError(container, 'Failed to load trade offers. Please try again.');
+        });
 }
 
-function createOfferCard(item) {
-    const card = document.createElement('article');
-    card.className = 'trade-offer-card';
+function displayTradeOffers(offers, container) {
+    if (offers.length === 0) {
+        container.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <i class="uil uil-exchange-alt" style="font-size: 3rem; color: #bdc3c7;"></i>
+                <p class="mt-3">No trade offers yet.</p>
+            </div>
+        `;
+        return;
+    }
 
-    const img = document.createElement('img');
-    img.className = 'trade-offer-image';
-    img.src = item.image_path || './images/placeholder.png';
-    img.alt = item.item_name;
-    img.onerror = function() {
-        this.src = './images/placeholder.png';
-    };
-    card.appendChild(img);
+    container.innerHTML = offers.map(offer => `
+        <div class="trade-offer-card">
+            <div class="offer-header">
+                <h4>${escapeHtml(offer.item_name)}</h4>
+                <span class="offer-status status-${offer.status}">${escapeHtml(offer.status)}</span>
+            </div>
+            <p class="offer-description">${escapeHtml(offer.offer_message || 'No message')}</p>
+            <div class="offer-meta">
+                <span><i class="uil uil-user"></i> From: ${escapeHtml(offer.offerer_name)}</span>
+                <span><i class="uil uil-dollar-alt"></i> $${parseFloat(offer.offer_amount).toFixed(2)}</span>
+            </div>
+            <div class="offer-actions">
+                <button class="btn btn-success btn-sm" onclick="handleOffer(${offer.id}, 'accept')">
+                    <i class="uil uil-check"></i> Accept
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="handleOffer(${offer.id}, 'reject')">
+                    <i class="uil uil-times"></i> Reject
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
 
-    const body = document.createElement('div');
-    body.className = 'trade-offer-body';
+function handleOffer(offerId, action) {
+    if (!confirm(`Are you sure you want to ${action} this offer?`)) {
+        return;
+    }
 
-    const title = document.createElement('a');
-    title.className = 'trade-offer-link trade-offer-title';
-    title.href = `./page.html?id=${encodeURIComponent(item.id)}`;
-    title.textContent = item.item_name;
-    body.appendChild(title);
+    fetch('handle_offer.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            offer_id: offerId,
+            action: action
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(`Offer ${action}ed successfully!`);
+            loadTradeOffers(); // Reload offers
+        } else {
+            alert(data.message || `Failed to ${action} offer`);
+        }
+    })
+    .catch(error => {
+        console.error('Error handling offer:', error);
+        alert(`Failed to ${action} offer. Please try again.`);
+    });
+}
 
-    const desc = document.createElement('p');
-    desc.className = 'trade-offer-desc';
-    desc.textContent = item.description || 'No description available';
-    body.appendChild(desc);
+function showError(container, message) {
+    container.innerHTML = `
+        <div class="col-12 text-center py-5">
+            <i class="uil uil-exclamation-triangle" style="font-size: 3rem; color: #e74c3c;"></i>
+            <p class="mt-3 text-danger">${escapeHtml(message)}</p>
+            <button class="btn btn-primary mt-3" onclick="location.reload()">
+                <i class="uil uil-refresh"></i> Retry
+            </button>
+        </div>
+    `;
+}
 
-    const footer = document.createElement('div');
-    footer.className = 'trade-offer-footer';
-
-    const ownerInfo = document.createElement('span');
-    ownerInfo.className = 'offer-owner';
-    ownerInfo.textContent = `Posted by User #${item.user_id}`;
-    footer.appendChild(ownerInfo);
-
-    const actionLink = document.createElement('a');
-    actionLink.className = 'trade-action-link';
-    actionLink.href = `./page.html?id=${encodeURIComponent(item.id)}&trade=true`;
-    actionLink.textContent = 'Open Offer';
-    footer.appendChild(actionLink);
-
-    body.appendChild(footer);
-    card.appendChild(body);
-
-    return card;
+// Escape HTML to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }

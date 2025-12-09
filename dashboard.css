@@ -470,3 +470,142 @@
 .trade-offers-grid .trade-owner-name {
   display: none;
 }
+
+/* Trade Offers Section */
+.trade-offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.trade-offer-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.trade-offer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.offer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.offer-header h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #2c3e50;
+}
+
+.offer-status {
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-accepted {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.offer-description {
+    color: #7f8c8d;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.offer-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.offer-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.offer-meta i {
+    font-size: 1.1rem;
+}
+
+.offer-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.offer-actions button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.offer-actions .btn-success {
+    background: #28a745;
+    color: white;
+}
+
+.offer-actions .btn-success:hover {
+    background: #218838;
+}
+
+.offer-actions .btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.offer-actions .btn-danger:hover {
+    background: #c82333;
+}
+
+/* Item owner styling */
+.item-owner {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.item-owner i {
+    font-size: 1rem;
+}
+
+.item-owner strong {
+    color: #2c3e50;
+}
